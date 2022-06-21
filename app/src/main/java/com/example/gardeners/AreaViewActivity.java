@@ -27,7 +27,7 @@ public class AreaViewActivity extends AppCompatActivity implements AreaAdapter.O
 
         initRecyclerView();
 
-        areaAdapter=new AreaAdapter(arrayList,this);
+        areaAdapter = new AreaAdapter(arrayList,this, getSupportFragmentManager());
     }
 
     private void filterList(String text) {
@@ -49,7 +49,7 @@ public class AreaViewActivity extends AppCompatActivity implements AreaAdapter.O
         recyclerView.setLayoutManager(linearLayoutManager);
         DividerItemDecoration itemDecoration=new DividerItemDecoration(this, linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(itemDecoration);
-        areaAdapter=new AreaAdapter(arrayList,this);
+        areaAdapter=new AreaAdapter(arrayList,this, getSupportFragmentManager());
         recyclerView.setAdapter(areaAdapter);
 
     }
