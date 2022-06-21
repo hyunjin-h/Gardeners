@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class PlantFragment extends Fragment {
-    private ArrayList<AreaData> arrayList=new ArrayList<>();
+    private ArrayList<AreaData> arrayList = new ArrayList<>();
     private AreaAdapter.OnAreaListener onAreaListener;
     private AreaAdapter areaAdapter;
     private RecyclerView recyclerView;
@@ -30,6 +30,7 @@ public class PlantFragment extends Fragment {
 
     public PlantFragment() {
         // Required empty public constructor
+        initDataset();
     }
 
     @Override
@@ -57,16 +58,14 @@ public class PlantFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDataset();
     }
 
     private void initDataset() {
         //for Test
-        ArrayList<AreaData> areaData = new ArrayList<>();
-        areaData.add(new AreaData(R.drawable.plant_1, "구역A-이름"));
-        areaData.add(new AreaData(R.drawable.plant_1, "구역B-이름"));
-        areaData.add(new AreaData(R.drawable.plant_1, "구역C-이름"));
-        areaData.add(new AreaData(R.drawable.plant_1, "구역D-이름"));
-        areaData.add(new AreaData(R.drawable.plant_1, "구역E-이름"));
+        arrayList.add(new AreaData(R.drawable.plant_1, "구역A-이름"));
+        arrayList.add(new AreaData(R.drawable.plant_1, "구역B-이름"));
+        arrayList.add(new AreaData(R.drawable.plant_1, "구역C-이름"));
+        arrayList.add(new AreaData(R.drawable.plant_1, "구역D-이름"));
+        arrayList.add(new AreaData(R.drawable.plant_1, "구역E-이름"));
     }
 }

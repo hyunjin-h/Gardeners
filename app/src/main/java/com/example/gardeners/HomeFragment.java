@@ -4,9 +4,19 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +29,7 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private TextView temperatureText, humidityText, co2Text;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -26,6 +37,62 @@ public class HomeFragment extends Fragment {
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    public void getCoreData() {
+        Thread thread = new Thread(new Runnable() {
+            JSONObject json;
+            @Override
+            public void run() {
+                try {
+                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/";
+                    URL url = new URL(page);
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+                    final StringBuilder sb = new StringBuilder();
+
+                    if(conn != null) {
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setConnectTimeout(10000);
+                        conn.setRequestMethod("GET");
+
+                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            // 결과 값 읽어오는 부분
+                            BufferedReader br = new BufferedReader(new InputStreamReader(
+                                    conn.getInputStream(), "utf-8"
+                            ));
+                            String line;
+                            while ((line = br.readLine()) != null) {
+                                sb.append(line);
+                            }
+                            // 버퍼리더 종료
+                            br.close();
+
+                            // 응답 Json 타입일 경우
+                            json = new JSONObject(sb.toString());
+                        }
+                        // 연결 끊기
+                        conn.disconnect();
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                temperatureText.setText(json.get("temperature").toString());
+                                humidityText.setText(json.get("humidity").toString());
+                                co2Text.setText(json.get("co2").toString());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                catch (Exception e) {
+                    Log.i("tag", "error :" + e);
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -59,6 +126,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        temperatureText = view.findViewById(R.id.temperatures_tv);
+        humidityText = view.findViewById(R.id.humidity_tv);
+        co2Text = view.findViewById(R.id.co2_tv);
+        getCoreData();
+        return view;
     }
 }
