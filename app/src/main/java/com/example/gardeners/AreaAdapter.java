@@ -1,6 +1,6 @@
 package com.example.gardeners;
 
-import android.app.ActionBar;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,23 +17,25 @@ import java.util.ArrayList;
 public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHolder> {
 
     private ArrayList<AreaData> arrayList=new ArrayList<>();
-    private OnAreaListener mOnAreaListener;
+    private final OnAreaListener mOnAreaListener;
+    private FragmentManager manager;
 
     public void setFilteredList(ArrayList<AreaData> filteredList){
         this.arrayList= filteredList;
         notifyDataSetChanged();
     }
 
-    public AreaAdapter(ArrayList<AreaData> arrayList, AreaAdapter.OnAreaListener onAreaListener) {
+    public AreaAdapter(ArrayList<AreaData> arrayList, AreaAdapter.OnAreaListener onAreaListener, FragmentManager manager) {
         this.arrayList = arrayList;
         this.mOnAreaListener=onAreaListener;
+        this.manager = manager;
     }
 
     @NonNull
     @Override
     public AreaAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.area_list,parent,false);
-        CustomViewHolder holder=new CustomViewHolder(view,mOnAreaListener);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.area_list,parent,false);
+        CustomViewHolder holder = new CustomViewHolder(view,mOnAreaListener);
 
         return holder;
     }
@@ -54,15 +58,19 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
 
         public CustomViewHolder(@NonNull View areaView, OnAreaListener onAreaListener) {
             super(areaView);
-            this.iv_area=(ImageView) areaView.findViewById(R.id.iv_area);
-            this.tv_area=(TextView) areaView.findViewById(R.id.tv_area);
-            this.onAreaListener=onAreaListener;
+            this.iv_area = (ImageView) areaView.findViewById(R.id.iv_area);
+            this.tv_area = (TextView) areaView.findViewById(R.id.tv_area);
+            this.onAreaListener = onAreaListener;
 
             areaView.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View view) { onAreaListener.onAreaClick(getBindingAdapterPosition()); }
+        public void onClick(View view) {
+//            onAreaListener.onAreaClick(getBindingAdapterPosition());
+            Fragment diaryFragment = new DiaryFragment(1);
+            manager.beginTransaction().replace(R.id.containers, diaryFragment).commit();
+        }
     }
 
     public interface OnAreaListener {
