@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuitem_bottombar_home"
+        android:icon="@drawable/ic_checked_house"
+        android:title=""
+        app:showAsAction=""/>
+    <item
+        android:id="@+id/menuitem_bottombar_plant"
+        android:icon="@drawable/ic_leaf"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menuitem_bottombar_search"
+        android:icon="@drawable/ic_magnifyingglass"
+        android:title=""
+        app:showAsAction="ifRoom"/>
+
+</menu>
+

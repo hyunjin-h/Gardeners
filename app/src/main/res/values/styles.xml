@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="weather">
+
+        <item name="android:textSize">
+            40px
+        </item>
+        <item name="android:textColor">
+            #646464
+        </item>
+
+    </style>
+    <style name="t">
+
+        <item name="android:textSize">
+            200px
+        </item>
+
+        <item name="android:textColor">
+            #646464
+        </item>
+
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            5
+        </item>
+
+        <item name="android:shadowRadius">
+            4
+        </item>
+
+    </style>
+    <style name="c">
+
+        <item name="android:textSize">
+            100px
+        </item>
+
+        <item name="android:textColor">
+            #646464
+        </item>
+
+        <item name="android:shadowColor">
+            #40000000
+        </item>
+
+        <item name="android:shadowDx">
+            0
+        </item>
+
+        <item name="android:shadowDy">
+            5
+        </item>
+
+        <item name="android:shadowRadius">
+            4
+        </item>
+
+    </style>
+    <style name="humidity">
+
+        <item name="android:textSize">
+            70px
+        </item>
+
+        <item name="android:textColor">
+            #646464
+        </item>
+
+    </style>
+    <style name="ppm">
+
+        <item name="android:textSize">
+            70px
+        </item>
+
+        <item name="android:textColor">
+            #646464
+        </item>
+
+    </style>
+
+    <style name="a">
+
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:textColor">
+            #BABABA
+        </item>
+
+    </style>
+
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="548px"
+    android:layout_height="769px"
+    android:layout_margin="16px"
+    app:cardElevation="15px"
+    app:cardCornerRadius="40px">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="58px"
+        android:layout_marginRight="20px"
+        android:layout_marginTop="65px"
+        android:layout_marginBottom="166px">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/area_image_frame"
+            android:layout_width="430px"
+            android:layout_height="485px">
+
+            <ImageView
+                android:id="@+id/iv_area"
+                android:layout_width="430px"
+                android:layout_height="485px"
+                app:srcCompat="@drawable/plant_1" />
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/light_button"
+            android:layout_width="42dp"
+            android:layout_height="124px"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="10px"
+            android:layout_marginRight="10px"
+            android:background="@drawable/lightbulb_button"
+            android:drawableTop="@drawable/ic_lightbulb"
+            android:elevation="15dp"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="430px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="34px" >
+
+        <TextView
+            android:id="@+id/tv_area"
+            android:layout_width="430px"
+            android:layout_height="100px"
+            android:text="구역 A 이름"
+            android:gravity="center_horizontal|center_vertical"/>
+
+        <Button
+            android:id="@+id/water_button"
+            android:layout_width="230px"
+            android:layout_height="100px"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/search_view_bg"
+            android:text="물주기"
+            android:elevation="15dp"
+            android:gravity="center_horizontal|center_vertical"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
