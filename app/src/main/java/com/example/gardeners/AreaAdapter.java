@@ -1,6 +1,7 @@
 package com.example.gardeners;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHolder> {
-
-    private ArrayList<AreaData> arrayList=new ArrayList<>();
+    private int id;
+    private ArrayList<AreaData> arrayList;
     private final OnAreaListener mOnAreaListener;
     private FragmentManager manager;
 
@@ -36,15 +37,14 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
     public AreaAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.area_list,parent,false);
         CustomViewHolder holder = new CustomViewHolder(view,mOnAreaListener);
-
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull AreaAdapter.CustomViewHolder holder, int position) {
-        holder.iv_area.setImageResource(arrayList.get(position).getIv_area());
+        id = arrayList.get(position).getArea_num();
+        holder.iv_area.setImageBitmap(arrayList.get(position).getIv_area());
         holder.tv_area.setText(arrayList.get(position).getTv_area());
-
         holder.itemView.setTag(position);
     }
 
@@ -61,14 +61,12 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
             this.iv_area = (ImageView) areaView.findViewById(R.id.iv_area);
             this.tv_area = (TextView) areaView.findViewById(R.id.tv_area);
             this.onAreaListener = onAreaListener;
-
             areaView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-//            onAreaListener.onAreaClick(getBindingAdapterPosition());
-            Fragment diaryFragment = new DiaryFragment(1);
+            Fragment diaryFragment = new DiaryFragment(id);
             manager.beginTransaction().replace(R.id.containers, diaryFragment).addToBackStack(null).commit();
         }
     }

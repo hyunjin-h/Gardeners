@@ -1,24 +1,26 @@
 package com.example.gardeners;
 
+import android.graphics.Bitmap;
+
 public class DiaryData {
-    private int iv_diary_plant;
+    private Bitmap iv_diary_plant;
     private String diary_day;
     private String diary_name;
     private String diary_content;
 
 
-    public DiaryData(int iv_diary_plant, String diary_day, String diary_name,String diary_content) {
+    public DiaryData(Bitmap iv_diary_plant, String diary_day, String diary_name,String diary_content) {
         this.iv_diary_plant=iv_diary_plant;
         this.diary_day=diary_day;
         this.diary_name=diary_name;
         this.diary_content=diary_content;
     }
 
-    public int getIv_diary_plant() {
+    public Bitmap getIv_diary_plant() {
         return iv_diary_plant;
     }
 
-    public void setIv_profile(int iv_profile) {
+    public void setIv_profile(Bitmap iv_profile) {
         this.iv_diary_plant = iv_diary_plant;
     }
 
