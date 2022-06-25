@@ -55,7 +55,7 @@ public class SearchFragment extends Fragment {
 
     public SearchFragment() {
         manager = PlantDataManager.getInstance();
-        if (manager.getArrayList().size() == 0) {
+        if (manager.getMap("").size() == 0) {
             initDataset();
         }
     }
@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(0);
-        plantAdapter = new PlantAdapter(manager.getArrayList(), onPlantListener, getActivity().getSupportFragmentManager());
+        plantAdapter = new PlantAdapter(manager.getMap(""), onPlantListener, getActivity().getSupportFragmentManager());
         recyclerView.setAdapter(plantAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         searchView = (SearchView) view.findViewById(R.id.searchView);
@@ -101,6 +101,18 @@ public class SearchFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.equals("")) {
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public synchronized void run() {
+                            try {
+                                plantAdapter.setFilteredList(manager.getMap(""));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
                 return false;
             }
         });
@@ -156,7 +168,7 @@ public class SearchFragment extends Fragment {
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
-                            manager.setArrayList(arrayList);
+                            manager.addMap(word, arrayList);
                         }
                         // 연결 끊기
                         conn.disconnect();
@@ -165,7 +177,7 @@ public class SearchFragment extends Fragment {
                         @Override
                         public synchronized void run() {
                             try {
-                                plantAdapter.setFilteredList(manager.getArrayList());
+                                plantAdapter.setFilteredList(manager.getMap(word));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -222,7 +234,7 @@ public class SearchFragment extends Fragment {
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
-                            manager.setArrayList(arrayList);
+                            manager.addMap("", arrayList);
                         }
                         // 연결 끊기
                         conn.disconnect();
@@ -231,7 +243,7 @@ public class SearchFragment extends Fragment {
                         @Override
                         public synchronized void run() {
                             try {
-                                plantAdapter.setFilteredList(manager.getArrayList());
+                                plantAdapter.setFilteredList(manager.getMap(""));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

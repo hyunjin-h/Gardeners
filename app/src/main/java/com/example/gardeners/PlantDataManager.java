@@ -1,22 +1,27 @@
 package com.example.gardeners;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PlantDataManager {
-    private ArrayList<PlantData> arrayList =new ArrayList<>();
+    Map<String, ArrayList<PlantData>> map = new HashMap<>();
     private static final PlantDataManager instance = new PlantDataManager();
 
-    private PlantDataManager() {}
+    private PlantDataManager() {
+        map.put("", new ArrayList<>());
+    }
 
     public static PlantDataManager getInstance() {
         return instance;
     }
-    public ArrayList<PlantData> getArrayList() {
-        return arrayList;
+
+    public ArrayList<PlantData> getMap(String key) {
+        return map.get(key);
     }
 
-    public void setArrayList(ArrayList<PlantData> arrayList) {
-        this.arrayList = arrayList;
+    public void addMap(String key, ArrayList<PlantData> arrayList) {
+        this.map.put(key, arrayList);
     }
 }
