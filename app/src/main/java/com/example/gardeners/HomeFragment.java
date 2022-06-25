@@ -79,8 +79,8 @@ public class HomeFragment extends Fragment {
                         public void run() {
                             try {
                                 temperatureText.setText(json.get("temperature").toString());
-                                humidityText.setText(json.get("humidity").toString());
-                                co2Text.setText(json.get("co2").toString());
+                                humidityText.setText(json.get("humidity").toString() + "%");
+                                co2Text.setText(json.get("co2").toString() + "ppm");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

@@ -1,5 +1,7 @@
 package com.example.gardeners;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -100,12 +103,29 @@ public class PlantFragment extends Fragment {
                             array = new JSONArray(sb.toString());
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
-                                arrayList.add(new AreaData(R.drawable.plant_1, object.get("name").toString()));
+                                URL urlConnection = new URL(object.get("image").toString());
+                                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+                                connection.setDoInput(true);
+                                connection.connect();
+                                InputStream input = connection.getInputStream();
+                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                arrayList.add(new AreaData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString()));
                             }
+                            notifyAll();
                         }
                         // 연결 끊기
                         conn.disconnect();
                     }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                areaAdapter.setFilteredList(arrayList);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
                 catch (Exception e) {
                     Log.i("tag", "error :" + e);

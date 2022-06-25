@@ -24,9 +24,9 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
 
 
     public void setFilteredList(ArrayList<PlantData> filteredList){
-        this.arrayList= filteredList;
+        arrayList.clear();
+        arrayList.addAll(filteredList);
         notifyDataSetChanged();
-
     }
 
     public PlantAdapter(ArrayList<PlantData> arrayList,OnPlantListener onPlantListener, FragmentManager manager) {

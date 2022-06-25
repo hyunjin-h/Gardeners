@@ -1,5 +1,6 @@
 package com.example.gardeners;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.CustomViewHo
 
     public DiaryAdapter(ArrayList<DiaryData> arrayList, OnDiaryListener onDiaryListener) {
         this.arrayList = arrayList;
+        Log.d("array", String.valueOf(arrayList));
         this.mOnDiaryListener=onDiaryListener;
     }
 
@@ -34,14 +36,14 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.CustomViewHo
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.diary_list,parent,false);
 
-        CustomViewHolder holder=new CustomViewHolder(view,mOnDiaryListener);
+        CustomViewHolder holder =new CustomViewHolder(view,mOnDiaryListener);
 
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        holder.iv_diary_plant.setImageResource(arrayList.get(position).getIv_diary_plant());
+        holder.iv_diary_plant.setImageBitmap(arrayList.get(position).getIv_diary_plant());
         holder.diary_day.setText(arrayList.get(position).getDiary_day());
         holder.diary_name.setText(arrayList.get(position).getDiary_name());
         holder.diary_content.setText(arrayList.get(position).getDiary_content());
@@ -77,8 +79,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.CustomViewHo
 
         @Override
         public void onClick(View view) {
-            onDiaryListener.onDiaryClick(getAbsoluteAdapterPosition());
-
+//            onDiaryListener.onDiaryClick(getAbsoluteAdapterPosition());
         }
     }
     public interface OnDiaryListener{
