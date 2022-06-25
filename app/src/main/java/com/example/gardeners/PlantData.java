@@ -6,10 +6,12 @@ public class PlantData {
     private String tv_content;
 
 
+
     public PlantData(int iv_profile, String tv_name, String tv_content) {
         this.iv_profile = iv_profile;
         this.tv_name = tv_name;
         this.tv_content = tv_content;
+
     }
 
     public int getIv_profile() {
@@ -35,4 +37,7 @@ public class PlantData {
     public void setTv_content(String tv_content) {
         this.tv_content = tv_content;
     }
+
+
+
 }

@@ -2,8 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="300px"
-    android:layout_margin="40px"
+    android:layout_height="250px"
+    android:layout_marginTop="20px"
+    android:layout_marginLeft="40px"
+    android:layout_marginRight="40px"
     app:cardElevation="15px"
     app:cardCornerRadius="60px">
 
@@ -37,7 +39,8 @@
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="48px"
+                android:textSize="40px"
+                android:fontFamily="@font/nb"
 
                 android:text="가락지나물" />
 
@@ -45,9 +48,11 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10px"
                 android:maxLines="3"
+                android:fontFamily="@font/nr"
                 android:text="장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다."
-                android:textSize="36px" />
+                android:textSize="32px" />
         </LinearLayout>
 
 

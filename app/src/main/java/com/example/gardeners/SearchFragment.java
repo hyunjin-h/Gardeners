@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +42,7 @@ public class SearchFragment extends Fragment {
 
     public SearchFragment() {
         // Required empty public constructor
+        initDataset();
     }
 
     /**
@@ -69,7 +73,7 @@ public class SearchFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(0);
-        plantAdapter = new PlantAdapter(arrayList, onPlantListener);
+        plantAdapter = new PlantAdapter(arrayList, onPlantListener, getActivity().getSupportFragmentManager());
         recyclerView.setAdapter(plantAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -80,16 +84,16 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initDataset();
+
     }
 
     private void initDataset() {
-        //for Test
-        ArrayList<PlantData> plantData = new ArrayList<>();
-        plantData.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        plantData.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        plantData.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        plantData.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        plantData.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+
     }
+
 }

@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="60px"
-        android:layout_marginTop="70px"
+        android:layout_marginTop="110px"
         android:layout_marginRight="60px"
         android:layout_marginBottom="240px"
-        app:cardCornerRadius="70dp">
+        app:cardCornerRadius="70px">
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -57,7 +57,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="330px"
-            android:layout_height="600px"
+            android:layout_height="500px"
             android:layout_marginLeft="50px"
             android:layout_marginTop="200px"
             app:cardCornerRadius="30px">
@@ -81,23 +81,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20px"
                     android:text="내 장미"
+                    android:fontFamily="@font/nb"
                     android:textColor="@color/black"
-                    android:textSize="40px" />
+                    android:textSize="35px" />
 
                 <TextView
                     android:id="@+id/vlog_option"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="100px"
+                    android:layout_marginTop="90px"
                     android:text="하루치"
+                    android:fontFamily="@font/nr"
                     android:textColor="@color/black"
                     android:textSize="32px" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="420px"
@@ -108,25 +112,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="1630px"
-            android:layout_marginTop="600px"
+            android:layout_marginTop="500px"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/change_option_btn"
-                android:layout_width="90px"
-                android:layout_height="90px"
-                android:background="@drawable/ic_circle_button"
-                android:drawableTop="@drawable/ic_gear"
-                android:padding="25px" />
+<!--            <Button-->
+<!--                android:id="@+id/change_option_btn"-->
+<!--                android:layout_width="90px"-->
+<!--                android:layout_height="90px"-->
+<!--                android:background="@drawable/ic_circle_button"-->
+<!--                android:drawableTop="@drawable/ic_gear"-->
+<!--                android:padding="25px" />-->
 
-            <Button
-                android:id="@+id/show_vlog_btn"
-                android:layout_width="90px"
-                android:layout_height="90px"
-                android:layout_marginTop="30px"
-                android:background="@drawable/ic_circle_button"
-                android:drawableTop="@drawable/ic_camera"
-                android:padding="25px" />
+<!--            <Button-->
+<!--                android:id="@+id/show_vlog_btn"-->
+<!--                android:layout_width="90px"-->
+<!--                android:layout_height="90px"-->
+<!--                android:layout_marginTop="30px"-->
+<!--                android:background="@drawable/ic_circle_button"-->
+<!--                android:drawableTop="@drawable/ic_camera"-->
+<!--                android:padding="25px" />-->
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

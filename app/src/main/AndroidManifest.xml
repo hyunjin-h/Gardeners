@@ -17,6 +17,11 @@
             android:name=".DiaryFragment"
             android:exported="false" />
 
+        <activity
+            android:name=".PlantDetailFragment"
+            android:exported="false" />
+
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/actions" />

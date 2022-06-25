@@ -67,7 +67,7 @@
     <style name="humidity">
 
         <item name="android:textSize">
-            70px
+            60px
         </item>
 
         <item name="android:textColor">
@@ -78,7 +78,7 @@
     <style name="ppm">
 
         <item name="android:textSize">
-            70px
+            60px
         </item>
 
         <item name="android:textColor">
@@ -90,7 +90,7 @@
     <style name="a">
 
         <item name="android:textSize">
-            36sp
+            36px
         </item>
 
         <item name="android:textColor">

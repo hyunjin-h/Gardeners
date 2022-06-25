@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_3"
     tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,9 +15,10 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="158px"
+            android:layout_marginTop="160px"
             android:text="비가 올 예정입니다. 창문을 닫아주세요."
-            android:textSize="40sp"
+            android:textSize="40px"
+            android:fontFamily="@font/nb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -28,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="152px"
+            android:layout_marginTop="230px"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/t"
+                android:fontFamily="@font/nb"
                 android:textAppearance="@style/t" />
 
             <TextView
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/c"
+                android:fontFamily="@font/nb"
                 android:textAppearance="@style/c"
                 android:gravity="bottom"/>
         </LinearLayout>
@@ -53,7 +56,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70px"
+            android:layout_marginTop="25px"
             app:layout_constraintTop_toBottomOf="@+id/temp_ll">
 
             <ImageView
@@ -73,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32px"
                 android:text="@string/humidity"
+                android:fontFamily="@font/nb"
                 android:textAppearance="@style/humidity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/drop_iv"
@@ -92,10 +96,10 @@
 
             <ImageView
                 android:id="@+id/co2_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="72px"
+                android:layout_height="72px"
                 android:layout_marginLeft="48px"
-                android:src="@drawable/ic_drop"
+                android:src="@drawable/co2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/rect_iv"
                 app:layout_constraintRight_toLeftOf="@id/co2_tv"
@@ -107,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18px"
                 android:text="@string/ppm"
+                android:fontFamily="@font/nb"
                 android:textAppearance="@style/ppm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/co2_iv"

@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:layout_width="1000px"
+    android:layout_width="1200px"
     android:orientation="horizontal">
     <ImageView
         android:layout_width="31px"
@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2022.02.02"
+            android:fontFamily="@font/nb"
             android:textColor="@color/gray"
             android:textSize="28px"
             android:layout_marginTop="10px"
@@ -44,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="28px"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/nbb"
                     android:text="'내장미' 등록"
                     />
                 <TextView
@@ -52,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="24px"
                     android:textColor="@color/gray"
+                    android:fontFamily="@font/nb"
                     android:text="일기가 들어갈 부분입니다."
                     android:layout_marginTop="20px"
                    />

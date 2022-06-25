@@ -51,12 +51,12 @@ public class PlantFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.my_plant1);
 
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, true);
-
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(0);
 
         areaAdapter = new AreaAdapter(arrayList, onAreaListener, getActivity().getSupportFragmentManager());
-        recyclerView.setLayoutManager(layoutManager);
+
         recyclerView.setAdapter(areaAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 

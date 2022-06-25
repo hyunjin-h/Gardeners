@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_3"
     tools:context=".SearchFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,9 +12,10 @@
         android:layout_height="match_parent">
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
-            android:layout_width="0dp"
+            android:layout_width="1800px"
             android:layout_height="106px"
-            android:layout_margin="60px"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="150px"
             android:background="@drawable/search_view_bg"
             android:elevation="15px"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="15px"
+
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

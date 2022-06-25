@@ -69,7 +69,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
         public void onClick(View view) {
 //            onAreaListener.onAreaClick(getBindingAdapterPosition());
             Fragment diaryFragment = new DiaryFragment(1);
-            manager.beginTransaction().replace(R.id.containers, diaryFragment).commit();
+            manager.beginTransaction().replace(R.id.containers, diaryFragment).addToBackStack(null).commit();
         }
     }
 

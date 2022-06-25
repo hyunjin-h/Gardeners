@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_3"
     tools:context=".PlantFragment">
 
     <LinearLayout
@@ -19,7 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90px"
-            android:layout_marginTop="185px"
+            android:layout_marginRight="90px"
+            android:layout_marginBottom="105px"
+
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>

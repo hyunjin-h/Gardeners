@@ -1,5 +1,6 @@
 package com.example.gardeners;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -15,6 +19,9 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
 
     private ArrayList<PlantData> arrayList;
     private final OnPlantListener mOnPlantListener;
+    private FragmentManager manager;
+
+
 
     public void setFilteredList(ArrayList<PlantData> filteredList){
         this.arrayList= filteredList;
@@ -22,9 +29,10 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
 
     }
 
-    public PlantAdapter(ArrayList<PlantData> arrayList,OnPlantListener onPlantListener) {
+    public PlantAdapter(ArrayList<PlantData> arrayList,OnPlantListener onPlantListener, FragmentManager manager) {
         this.arrayList = arrayList;
         this.mOnPlantListener=onPlantListener;
+        this.manager = manager;
     }
 
 
@@ -34,7 +42,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
 
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,parent,false);
 
-        return new CustomViewHolder(view, mOnPlantListener);
+        return new CustomViewHolder(view,mOnPlantListener, this.manager);
     }
 
     @Override
@@ -57,13 +65,17 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
         protected ImageView iv_profile;
         protected TextView tv_name;
         protected TextView tv_content;
+        protected ImageView iv_plant;
+        protected TextView tv_plant_name,tv_flowerlan,tv_content_detail,tv_rasing_detail;
         OnPlantListener onPlantListener;
+        private final FragmentManager manager;
 
-        public CustomViewHolder(@NonNull View itemView,OnPlantListener onPlantListener) {
+        public CustomViewHolder(@NonNull View itemView,OnPlantListener onPlantListener, FragmentManager manager) {
             super(itemView);
             this.iv_profile=(ImageView) itemView.findViewById(R.id.iv_profile);
             this.tv_name=(TextView) itemView.findViewById(R.id.tv_name);
             this.tv_content=(TextView) itemView.findViewById(R.id.tv_content);
+            this.manager = manager;
             this.onPlantListener=onPlantListener;
 
             itemView.setOnClickListener(this);
@@ -72,7 +84,10 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.CustomViewHo
 
         @Override
         public void onClick(View view) {
-            onPlantListener.onPlantClick(getAdapterPosition());
+            //onPlantListener.onPlantClick(getAbsoluteAdapterPosition());
+            Fragment plantDetailFragment=new PlantDetailFragment(1);
+            manager.beginTransaction().replace(R.id.containers, plantDetailFragment).commit();
+
         }
     }
     public interface OnPlantListener{
