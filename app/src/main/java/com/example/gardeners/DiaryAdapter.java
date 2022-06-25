@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.CustomViewHolder> {
-
     private ArrayList<DiaryData> arrayList;
     private final OnDiaryListener mOnDiaryListener;
 
@@ -25,7 +24,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.CustomViewHo
 
     public DiaryAdapter(ArrayList<DiaryData> arrayList, OnDiaryListener onDiaryListener) {
         this.arrayList = arrayList;
-        Log.d("array", String.valueOf(arrayList));
         this.mOnDiaryListener=onDiaryListener;
     }
 

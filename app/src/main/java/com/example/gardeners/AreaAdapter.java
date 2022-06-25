@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHolder> {
-    private int id;
     private ArrayList<AreaData> arrayList;
     private final OnAreaListener mOnAreaListener;
     private FragmentManager manager;
@@ -42,7 +41,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
 
     @Override
     public void onBindViewHolder(@NonNull AreaAdapter.CustomViewHolder holder, int position) {
-        id = arrayList.get(position).getArea_num();
+        holder.id = arrayList.get(position).getArea_num();
         holder.iv_area.setImageBitmap(arrayList.get(position).getIv_area());
         holder.tv_area.setText(arrayList.get(position).getTv_area());
         holder.itemView.setTag(position);
@@ -52,6 +51,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.CustomViewHold
     public int getItemCount() { return arrayList.size(); }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        protected int id;
         protected ImageView iv_area;
         protected TextView tv_area;
         OnAreaListener onAreaListener;

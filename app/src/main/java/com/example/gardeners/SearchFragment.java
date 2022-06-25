@@ -1,20 +1,32 @@
 package com.example.gardeners;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Button;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -34,15 +46,18 @@ public class SearchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<PlantData> arrayList=new ArrayList<>();
     private PlantAdapter.OnPlantListener onPlantListener;
     private PlantAdapter plantAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private PlantDataManager manager;
+    private SearchView searchView;
 
     public SearchFragment() {
-        // Required empty public constructor
-        initDataset();
+        manager = PlantDataManager.getInstance();
+        if (manager.getArrayList().size() == 0) {
+            initDataset();
+        }
     }
 
     /**
@@ -73,10 +88,22 @@ public class SearchFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.scrollToPosition(0);
-        plantAdapter = new PlantAdapter(arrayList, onPlantListener, getActivity().getSupportFragmentManager());
+        plantAdapter = new PlantAdapter(manager.getArrayList(), onPlantListener, getActivity().getSupportFragmentManager());
         recyclerView.setAdapter(plantAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        searchView = (SearchView) view.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchFlowerByWord(query);
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }
@@ -87,13 +114,136 @@ public class SearchFragment extends Fragment {
 
     }
 
-    private void initDataset() {
-        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
-        arrayList.add(new PlantData(R.drawable.plant_1, "가락지나물", "장미목 장미과에 속하는 관속식물이다. 낮은 지대의 습기 많은 곳에 자라는 여러해살이풀이다. 줄기는 땅 위로 뻗으며, 길이 20~60cm다. (더보기)"));
+    private synchronized void searchFlowerByWord(String word) {
+        Thread thread = new Thread(new Runnable() {
+            JSONArray array;
+            final ArrayList<PlantData> arrayList =new ArrayList<>();
+            @Override
+            public synchronized void run() {
+                try {
+                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/?word=" + word;
+                    URL url = new URL(page);
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 
+                    final StringBuilder sb = new StringBuilder();
+
+                    if(conn != null) {
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setConnectTimeout(10000);
+                        conn.setRequestMethod("GET");
+
+                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            // 결과 값 읽어오는 부분
+                            BufferedReader br = new BufferedReader(new InputStreamReader(
+                                    conn.getInputStream(), "utf-8"
+                            ));
+                            String line;
+                            while ((line = br.readLine()) != null) {
+                                sb.append(line);
+                            }
+                            // 버퍼리더 종료
+                            br.close();
+                            JSONObject temp = new JSONObject(sb.toString());
+//                            Log.d("temp object", String.valueOf(temp.getJSONArray("results")));
+                            array = temp.getJSONArray("results");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                URL urlConnection = new URL(object.get("main_image").toString());
+                                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+                                connection.setDoInput(true);
+                                connection.connect();
+                                InputStream input = connection.getInputStream();
+                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
+                            }
+                            manager.setArrayList(arrayList);
+                        }
+                        // 연결 끊기
+                        conn.disconnect();
+                    }
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public synchronized void run() {
+                            try {
+                                plantAdapter.setFilteredList(manager.getArrayList());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                catch (Exception e) {
+                    Log.i("tag", "error :" + e);
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private synchronized void initDataset() {
+        Thread thread = new Thread(new Runnable() {
+            JSONArray array;
+            final ArrayList<PlantData> arrayList =new ArrayList<>();
+            @Override
+            public synchronized void run() {
+                try {
+                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/";
+                    URL url = new URL(page);
+                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+
+                    final StringBuilder sb = new StringBuilder();
+
+                    if(conn != null) {
+                        conn.setRequestProperty("Accept", "application/json");
+                        conn.setConnectTimeout(10000);
+                        conn.setRequestMethod("GET");
+
+                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                            // 결과 값 읽어오는 부분
+                            BufferedReader br = new BufferedReader(new InputStreamReader(
+                                    conn.getInputStream(), "utf-8"
+                            ));
+                            String line;
+                            while ((line = br.readLine()) != null) {
+                                sb.append(line);
+                            }
+                            // 버퍼리더 종료
+                            br.close();
+                            JSONObject temp = new JSONObject(sb.toString());
+//                            Log.d("temp object", String.valueOf(temp.getJSONArray("results")));
+                            array = temp.getJSONArray("results");
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject object = array.getJSONObject(i);
+                                URL urlConnection = new URL(object.get("main_image").toString());
+                                HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
+                                connection.setDoInput(true);
+                                connection.connect();
+                                InputStream input = connection.getInputStream();
+                                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
+                            }
+                            manager.setArrayList(arrayList);
+                        }
+                        // 연결 끊기
+                        conn.disconnect();
+                    }
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public synchronized void run() {
+                            try {
+                                plantAdapter.setFilteredList(manager.getArrayList());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                catch (Exception e) {
+                    Log.i("tag", "error :" + e);
+                }
+            }
+        });
+        thread.start();
     }
 
 }
