@@ -15,7 +15,7 @@
             android:layout_width="1800px"
             android:layout_height="106px"
             android:gravity="center_horizontal"
-            android:layout_marginTop="150px"
+            android:layout_marginTop="50px"
             android:background="@drawable/search_view_bg"
             android:elevation="15px"
             app:layout_constraintEnd_toEndOf="parent"
