@@ -1,7 +1,9 @@
 package com.example.gardeners;
 
+import android.graphics.Bitmap;
+
 public class PlantDetailData {
-    private int iv_plant;
+    private Bitmap iv_plant;
     private String tv_plant_name;
     private String tv_flowerlan;
     private String tv_content_detail;
@@ -9,7 +11,7 @@ public class PlantDetailData {
 
 
 
-    public PlantDetailData(int iv_plant, String tv_plant_name, String tv_flowerlan, String tv_content_detail, String tv_rasing_detail) {
+    public PlantDetailData(Bitmap iv_plant, String tv_plant_name, String tv_flowerlan, String tv_content_detail, String tv_rasing_detail) {
 
         this.iv_plant=iv_plant;
         this.tv_plant_name=tv_plant_name;
@@ -19,11 +21,11 @@ public class PlantDetailData {
     }
 
 
-    public int getIv_plant() {
+    public Bitmap getIv_plant() {
         return iv_plant;
     }
 
-    public void setIv_plant(int iv_plant) {
+    public void setIv_plant(Bitmap iv_plant) {
         this.iv_plant = iv_plant;
     }
 
