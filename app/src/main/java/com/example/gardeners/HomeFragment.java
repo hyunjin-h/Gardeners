@@ -81,8 +81,6 @@ public class HomeFragment extends Fragment {
                 try {
                     progressBar.setVisibility(View.VISIBLE);
                     homeData.setVisibility(View.INVISIBLE);
-
-
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();

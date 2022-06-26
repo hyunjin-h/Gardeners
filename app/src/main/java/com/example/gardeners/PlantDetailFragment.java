@@ -26,11 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PlantDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PlantDetailFragment extends Fragment {
 
 
@@ -53,26 +48,6 @@ public class PlantDetailFragment extends Fragment {
     public PlantDetailFragment(int id) {
         this.id = id;
         initDataset();
-    }
-
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlantDetailFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlantDetailFragment newInstance(String param1, String param2) {
-        PlantDetailFragment fragment = new PlantDetailFragment(1);
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -141,7 +116,6 @@ public class PlantDetailFragment extends Fragment {
                             br.close();
 
                             // 응답 Json 타입일 경우
-                            Log.d("detail json", sb.toString());
                             object = new JSONObject(sb.toString());
                             URL urlConnection = new URL(object.get("main_image").toString());
                             HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
@@ -178,6 +152,5 @@ public class PlantDetailFragment extends Fragment {
             }
         });
         thread.start();
-//        arrayList.add(new PlantDetailData(R.drawable.plant_1,"2","2","2","3"));
     }
 }

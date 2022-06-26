@@ -105,17 +105,13 @@ public class DiaryFragment extends Fragment {
 
     }
 
-
     private void initGardenData() {
         Thread thread = new Thread(new Runnable() {
             JSONObject object;
-
             @Override
             public void run() {
 
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
-
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -145,8 +141,9 @@ public class DiaryFragment extends Fragment {
                             connection.connect();
                             InputStream input = connection.getInputStream();
                             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                            myBitmap = myBitmap.createScaledBitmap(myBitmap, 100, 100, true);
+                            myBitmap = Bitmap.createScaledBitmap(myBitmap, 100, 100, true);
                             image = myBitmap;
+                            Log.d("object", String.valueOf(object));
                         }
                         // 연결 끊기
                         conn.disconnect();
@@ -160,15 +157,11 @@ public class DiaryFragment extends Fragment {
 //                                period.setText(object.get("period").toString() + "일");
                                 plantName.setText(object.get("name").toString());
                                 humidity.setText(object.get("humidity").toString() + "%RH");
-
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-
                 } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
