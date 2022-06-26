@@ -2,12 +2,14 @@ package com.example.gardeners;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -30,6 +32,8 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private TextView temperatureText, humidityText, co2Text;
+    private View homeData;
+    private ProgressBar progressBar;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -42,21 +46,26 @@ public class HomeFragment extends Fragment {
     public void getCoreData() {
         Thread thread = new Thread(new Runnable() {
             JSONObject json;
+
             @Override
             public void run() {
                 try {
+                    progressBar.setVisibility(View.VISIBLE);
+                    homeData.setVisibility(View.INVISIBLE);
+
+
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/";
                     URL url = new URL(page);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     final StringBuilder sb = new StringBuilder();
 
-                    if(conn != null) {
+                    if (conn != null) {
                         conn.setRequestProperty("Accept", "application/json");
                         conn.setConnectTimeout(10000);
                         conn.setRequestMethod("GET");
 
-                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             // 결과 값 읽어오는 부분
                             BufferedReader br = new BufferedReader(new InputStreamReader(
                                     conn.getInputStream(), "utf-8"
@@ -81,13 +90,14 @@ public class HomeFragment extends Fragment {
                                 temperatureText.setText(json.get("temperature").toString());
                                 humidityText.setText(json.get("humidity").toString() + "%");
                                 co2Text.setText(json.get("co2").toString() + "ppm");
+                                progressBar.setVisibility(View.INVISIBLE);
+                                homeData.setVisibility(View.VISIBLE);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
             }
@@ -130,6 +140,8 @@ public class HomeFragment extends Fragment {
         temperatureText = view.findViewById(R.id.temperatures_tv);
         humidityText = view.findViewById(R.id.humidity_tv);
         co2Text = view.findViewById(R.id.co2_tv);
+        homeData = view.findViewById(R.id.home_data);
+        progressBar = view.findViewById(R.id.progressBar2);
         getCoreData();
         return view;
     }

@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gardeners"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="false"
         android:largeHeap="true"
         >
         <activity

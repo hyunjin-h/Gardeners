@@ -5,11 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_3"
+
     tools:context=".HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/home_data">
 
         <TextView
             android:id="@+id/textView"
@@ -54,6 +56,7 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25px"
@@ -66,8 +69,8 @@
                 android:layout_marginRight="18px"
                 android:src="@drawable/ic_drop"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/humidity_tv"
                 app:layout_constraintLeft_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/humidity_tv"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -75,8 +78,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32px"
-                android:text="@string/humidity"
                 android:fontFamily="@font/nb"
+                android:text="@string/humidity"
                 android:textAppearance="@style/humidity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/drop_iv"
@@ -96,10 +99,10 @@
 
             <ImageView
                 android:id="@+id/co2_iv"
-                android:layout_width="72px"
-                android:layout_height="72px"
+                android:layout_width="70px"
+                android:layout_height="70px"
                 android:layout_marginLeft="48px"
-                android:src="@drawable/co2"
+                android:src="@drawable/ic_sun"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/rect_iv"
                 app:layout_constraintRight_toLeftOf="@id/co2_tv"
@@ -110,8 +113,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18px"
-                android:text="@string/ppm"
                 android:fontFamily="@font/nb"
+                android:text="@string/ppm"
                 android:textAppearance="@style/ppm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/co2_iv"
@@ -119,5 +122,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/gray"
+        android:layout_gravity="center" />
 </FrameLayout>
