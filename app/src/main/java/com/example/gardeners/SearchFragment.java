@@ -57,9 +57,12 @@ public class SearchFragment extends Fragment {
 
     public SearchFragment() {
         manager = PlantDataManager.getInstance();
-        if (manager.getMap("").size() == 0) {
-            initDataset();
-        }
+        initDataset();
+
+//        if (manager.getMap("").size() == 0) {
+//
+//            initDataset();
+//        }
     }
 
     /**
@@ -86,7 +89,8 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        progressBar=(ProgressBar)view.findViewById(R.id.progressBar3);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar3);
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -110,6 +114,8 @@ public class SearchFragment extends Fragment {
                         public synchronized void run() {
                             try {
                                 plantAdapter.setFilteredList(manager.getMap(""));
+                                progressBar.setVisibility(View.INVISIBLE);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -132,23 +138,24 @@ public class SearchFragment extends Fragment {
     private synchronized void searchFlowerByWord(String word) {
         Thread thread = new Thread(new Runnable() {
             JSONArray array;
-            final ArrayList<PlantData> arrayList =new ArrayList<>();
+            final ArrayList<PlantData> arrayList = new ArrayList<>();
+
             @Override
             public synchronized void run() {
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
+
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/?word=" + word;
                     URL url = new URL(page);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     final StringBuilder sb = new StringBuilder();
 
-                    if(conn != null) {
+                    if (conn != null) {
                         conn.setRequestProperty("Accept", "application/json");
                         conn.setConnectTimeout(10000);
                         conn.setRequestMethod("GET");
 
-                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             // 결과 값 읽어오는 부분
                             BufferedReader br = new BufferedReader(new InputStreamReader(
                                     conn.getInputStream(), "utf-8"
@@ -170,6 +177,7 @@ public class SearchFragment extends Fragment {
                                 connection.connect();
                                 InputStream input = connection.getInputStream();
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                myBitmap = myBitmap.createScaledBitmap(myBitmap,200,200,true);
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
                             manager.addMap(word, arrayList);
@@ -184,13 +192,13 @@ public class SearchFragment extends Fragment {
                             try {
                                 plantAdapter.setFilteredList(manager.getMap(word));
                                 progressBar.setVisibility(View.INVISIBLE);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
 
@@ -202,22 +210,23 @@ public class SearchFragment extends Fragment {
     private synchronized void initDataset() {
         Thread thread = new Thread(new Runnable() {
             JSONArray array;
-            final ArrayList<PlantData> arrayList =new ArrayList<>();
+            final ArrayList<PlantData> arrayList = new ArrayList<>();
+
             @Override
             public synchronized void run() {
                 try {
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/";
                     URL url = new URL(page);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     final StringBuilder sb = new StringBuilder();
 
-                    if(conn != null) {
+                    if (conn != null) {
                         conn.setRequestProperty("Accept", "application/json");
                         conn.setConnectTimeout(10000);
                         conn.setRequestMethod("GET");
 
-                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             // 결과 값 읽어오는 부분
                             BufferedReader br = new BufferedReader(new InputStreamReader(
                                     conn.getInputStream(), "utf-8"
@@ -239,13 +248,16 @@ public class SearchFragment extends Fragment {
                                 connection.connect();
                                 InputStream input = connection.getInputStream();
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                myBitmap = myBitmap.createScaledBitmap(myBitmap,200,200,true);
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
                             manager.addMap("", arrayList);
 
-                        }
+
+                    }
                         // 연결 끊기
                         conn.disconnect();
+
                     }
                     requireActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -257,14 +269,19 @@ public class SearchFragment extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+
+
                         }
                     });
-                }
-                catch (Exception e) {
+
+                } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
+
             }
+
         });
+
         thread.start();
     }
 

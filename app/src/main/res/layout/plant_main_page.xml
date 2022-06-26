@@ -65,7 +65,6 @@
             android:textSize="32px" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/plant_info"
             android:layout_width="330px"
             android:layout_height="500px"
             android:layout_marginLeft="50px"
@@ -73,6 +72,7 @@
             app:cardCornerRadius="30px">
 
             <LinearLayout
+                android:id="@+id/plant_info"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"

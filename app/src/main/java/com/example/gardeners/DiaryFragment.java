@@ -50,8 +50,8 @@ public class DiaryFragment extends Fragment {
     private DiaryAdapter diaryAdapter;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
+    private View plantInfo;
     private ImageButton back;
-    private CardView plantInfo;
     private ProgressBar progressBar;
 
 
@@ -75,13 +75,15 @@ public class DiaryFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         imageView = (ImageView) view.findViewById(R.id.vlog_image);
-        plantInfo = (CardView) view.findViewById(R.id.plant_info);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
 
         plantName = (TextView) view.findViewById(R.id.vlog_plant_name);
         humidity = (TextView) view.findViewById(R.id.plant_humidity);
-        period = (TextView) view.findViewById(R.id.vlog_option);
-        section = (TextView) view.findViewById(R.id.textView2);
+        period=(TextView)view.findViewById(R.id.vlog_period);
+        section=(TextView)view.findViewById(R.id.textView2);
+        plantInfo=(View)view.findViewById(R.id.plant_info);
+
+
 
         back = (ImageButton) view.findViewById(R.id.imageButton2);
 
@@ -100,6 +102,7 @@ public class DiaryFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
 
@@ -111,9 +114,6 @@ public class DiaryFragment extends Fragment {
             public void run() {
 
                 try {
-                    section.setVisibility(View.INVISIBLE);
-                    plantInfo.setVisibility(View.INVISIBLE);
-                    recyclerView.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.VISIBLE);
 
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/";
@@ -145,6 +145,7 @@ public class DiaryFragment extends Fragment {
                             connection.connect();
                             InputStream input = connection.getInputStream();
                             Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                            myBitmap = myBitmap.createScaledBitmap(myBitmap, 100, 100, true);
                             image = myBitmap;
                         }
                         // 연결 끊기
@@ -156,9 +157,10 @@ public class DiaryFragment extends Fragment {
                             try {
                                 imageView.setImageBitmap(image);
                                 section.setText(object.get("section").toString() + "구역");
-                                period.setText(object.get("period").toString() + "일");
+//                                period.setText(object.get("period").toString() + "일");
                                 plantName.setText(object.get("name").toString());
                                 humidity.setText(object.get("humidity").toString() + "%RH");
+
 
 
                             } catch (JSONException e) {
@@ -166,6 +168,7 @@ public class DiaryFragment extends Fragment {
                             }
                         }
                     });
+
                 } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
@@ -213,6 +216,7 @@ public class DiaryFragment extends Fragment {
                                 connection.connect();
                                 InputStream input = connection.getInputStream();
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                                myBitmap = myBitmap.createScaledBitmap(myBitmap, 200, 200, true);
                                 arrayList.add(new DiaryData(myBitmap, object.get("created_at").toString().substring(0, 10), object.get("title").toString(), object.get("description").toString()));
                             }
                             Log.d("array", String.valueOf(arrayList));
@@ -225,9 +229,6 @@ public class DiaryFragment extends Fragment {
                         public void run() {
                             try {
                                 diaryAdapter.setFilteredList(arrayList);
-                                section.setVisibility(View.VISIBLE);
-                                plantInfo.setVisibility(View.VISIBLE);
-                                recyclerView.setVisibility(View.VISIBLE);
                                 progressBar.setVisibility(View.INVISIBLE);
 
                             } catch (Exception e) {
