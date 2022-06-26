@@ -2,6 +2,7 @@ package com.example.gardeners;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -32,11 +34,14 @@ import java.util.ArrayList;
 
 public class DiaryFragment extends Fragment {
     private int id;
+
     public DiaryFragment(int id) {
         this.id = id;
         initDataset();
         initGardenData();
+
     }
+
     private ImageView imageView;
     private TextView plantName, period, humidity, section;
     private Bitmap image;
@@ -46,6 +51,9 @@ public class DiaryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ImageButton back;
+    private CardView plantInfo;
+    private ProgressBar progressBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,13 +75,15 @@ public class DiaryFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         imageView = (ImageView) view.findViewById(R.id.vlog_image);
+        plantInfo = (CardView) view.findViewById(R.id.plant_info);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
 
         plantName = (TextView) view.findViewById(R.id.vlog_plant_name);
         humidity = (TextView) view.findViewById(R.id.plant_humidity);
         period = (TextView) view.findViewById(R.id.vlog_option);
         section = (TextView) view.findViewById(R.id.textView2);
 
-        back=(ImageButton) view.findViewById(R.id.imageButton2);
+        back = (ImageButton) view.findViewById(R.id.imageButton2);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,21 +106,28 @@ public class DiaryFragment extends Fragment {
     private void initGardenData() {
         Thread thread = new Thread(new Runnable() {
             JSONObject object;
+
             @Override
             public void run() {
+
                 try {
+                    section.setVisibility(View.INVISIBLE);
+                    plantInfo.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/";
                     URL url = new URL(page);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     final StringBuilder sb = new StringBuilder();
 
-                    if(conn != null) {
+                    if (conn != null) {
                         conn.setRequestProperty("Accept", "application/json");
                         conn.setConnectTimeout(10000);
                         conn.setRequestMethod("GET");
 
-                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             // 결과 값 읽어오는 부분
                             BufferedReader br = new BufferedReader(new InputStreamReader(
                                     conn.getInputStream(), "utf-8"
@@ -142,13 +159,14 @@ public class DiaryFragment extends Fragment {
                                 period.setText(object.get("period").toString() + "일");
                                 plantName.setText(object.get("name").toString());
                                 humidity.setText(object.get("humidity").toString() + "%RH");
+
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
             }
@@ -159,21 +177,23 @@ public class DiaryFragment extends Fragment {
     private void initDataset() {
         Thread thread = new Thread(new Runnable() {
             JSONArray array;
+
             @Override
             public void run() {
                 try {
+
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/diary/";
                     URL url = new URL(page);
-                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
                     final StringBuilder sb = new StringBuilder();
 
-                    if(conn != null) {
+                    if (conn != null) {
                         conn.setRequestProperty("Accept", "application/json");
                         conn.setConnectTimeout(10000);
                         conn.setRequestMethod("GET");
 
-                        if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                             // 결과 값 읽어오는 부분
                             BufferedReader br = new BufferedReader(new InputStreamReader(
                                     conn.getInputStream(), "utf-8"
@@ -205,13 +225,17 @@ public class DiaryFragment extends Fragment {
                         public void run() {
                             try {
                                 diaryAdapter.setFilteredList(arrayList);
+                                section.setVisibility(View.VISIBLE);
+                                plantInfo.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     });
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
             }

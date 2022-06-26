@@ -30,6 +30,7 @@
 
 
         <LinearLayout
+            android:id="@+id/detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -46,6 +47,7 @@
                     android:id="@+id/iv_plant"
                     android:layout_width="430px"
                     android:layout_height="430px"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/plant_1" />
 
                 <TextView
@@ -163,6 +165,14 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/gray"/>
 
     </androidx.cardview.widget.CardView>
 

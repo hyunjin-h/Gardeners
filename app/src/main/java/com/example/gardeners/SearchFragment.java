@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -52,6 +53,7 @@ public class SearchFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private PlantDataManager manager;
     private SearchView searchView;
+    private ProgressBar progressBar;
 
     public SearchFragment() {
         manager = PlantDataManager.getInstance();
@@ -84,6 +86,7 @@ public class SearchFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        progressBar=(ProgressBar)view.findViewById(R.id.progressBar3);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -133,6 +136,7 @@ public class SearchFragment extends Fragment {
             @Override
             public synchronized void run() {
                 try {
+                    progressBar.setVisibility(View.VISIBLE);
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/?word=" + word;
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -169,6 +173,7 @@ public class SearchFragment extends Fragment {
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
                             manager.addMap(word, arrayList);
+
                         }
                         // 연결 끊기
                         conn.disconnect();
@@ -178,6 +183,7 @@ public class SearchFragment extends Fragment {
                         public synchronized void run() {
                             try {
                                 plantAdapter.setFilteredList(manager.getMap(word));
+                                progressBar.setVisibility(View.INVISIBLE);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -187,6 +193,7 @@ public class SearchFragment extends Fragment {
                 catch (Exception e) {
                     Log.i("tag", "error :" + e);
                 }
+
             }
         });
         thread.start();
@@ -235,6 +242,7 @@ public class SearchFragment extends Fragment {
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
                             manager.addMap("", arrayList);
+
                         }
                         // 연결 끊기
                         conn.disconnect();
@@ -244,6 +252,8 @@ public class SearchFragment extends Fragment {
                         public synchronized void run() {
                             try {
                                 plantAdapter.setFilteredList(manager.getMap(""));
+                                progressBar.setVisibility(View.INVISIBLE);
+
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

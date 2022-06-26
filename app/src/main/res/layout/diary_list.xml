@@ -32,6 +32,7 @@
                 android:layout_height="230px"
                 android:layout_marginLeft="10px"
                 android:layout_marginTop="10px"
+                android:scaleType="centerCrop"
                 android:src="@drawable/plant_1"/>
             <LinearLayout
                 android:layout_width="wrap_content"
