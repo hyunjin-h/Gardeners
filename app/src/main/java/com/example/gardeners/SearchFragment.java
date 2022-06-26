@@ -239,7 +239,7 @@ public class SearchFragment extends Fragment {
                             br.close();
                             JSONObject temp = new JSONObject(sb.toString());
                             array = temp.getJSONArray("results");
-                            for (int i = 0; i < 3; i++) {
+                            for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 URL urlConnection = new URL(object.get("main_image").toString());
                                 HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();

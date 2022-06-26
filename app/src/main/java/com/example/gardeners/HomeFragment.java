@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment {
     private ProgressBar progressBar;
     private static final int CAMERA_REQUEST = 1888;
     private static final int CAPTURE_IMAGE_REQUEST = 1;
+    private ImageButton refreshButton;
     private String mCurrentPhotoPath;
     private File photoFile;
     private ImageView imageView;
@@ -79,8 +81,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
-                    homeData.setVisibility(View.INVISIBLE);
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
                             try {
                                 temperatureText.setText(json.get("temperature").toString());
                                 humidityText.setText(json.get("humidity").toString() + "%");
-                                co2Text.setText(json.get("co2").toString() + "ppm");
+                                co2Text.setText(json.get("co2").toString() + "nit");
                                 progressBar.setVisibility(View.INVISIBLE);
                                 homeData.setVisibility(View.VISIBLE);
                             } catch (JSONException e) {
@@ -151,6 +151,20 @@ public class HomeFragment extends Fragment {
         co2Text = view.findViewById(R.id.co2_tv);
         imageView = view.findViewById(R.id.rect_iv);
         surfaceView = view.findViewById(R.id.surfaceView);
+        refreshButton = view.findViewById(R.id.refresh_button);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.VISIBLE);
+                        homeData.setVisibility(View.INVISIBLE);
+                        getCoreData();
+                    }
+                });
+            }
+        });
         temperatureText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
