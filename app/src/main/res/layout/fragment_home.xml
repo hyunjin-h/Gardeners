@@ -7,23 +7,27 @@
     android:background="@drawable/background_3"
     tools:context=".HomeFragment">
     <ImageButton
+        android:id="@+id/refresh_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrowclockwise"
         android:background="#00000000"
         android:layout_marginTop="90px"
         android:layout_marginLeft="1800px"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/home_data">
+        android:id="@+id/home_data"
+        android:visibility="invisible"
+        >
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="160px"
-            android:text="비가 올 예정입니다. 창문을 닫아주세요."
+            android:text="                               "
             android:textSize="40px"
             android:fontFamily="@font/nb"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,7 +139,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/gray"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:visibility="visible"/>
 
     <com.example.gardeners.CameraSurfaceView
         android:id="@+id/surfaceView"
