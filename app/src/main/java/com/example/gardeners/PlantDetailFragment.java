@@ -47,7 +47,7 @@ public class PlantDetailFragment extends Fragment {
     private ImageButton back;
     private ImageView iv_plant;
     private TextView tv_plant_name,tv_flowerlan,tv_content_detail,tv_rasing_detail;
-    private View detail;
+    private View plant_detail;
     private ProgressBar progressBar;
 
     public PlantDetailFragment(int id) {
@@ -96,8 +96,9 @@ public class PlantDetailFragment extends Fragment {
         tv_rasing_detail=(TextView)view.findViewById(R.id.tv_rasing_detail);
         tv_flowerlan=(TextView)view.findViewById(R.id.tv_flowerlan);
         progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
-        detail=(View)view.findViewById(R.id.detail);
+        plant_detail=(View)view.findViewById(R.id.plant_detail);
         iv_plant.setImageResource(R.drawable.plant_1);
+        plant_detail.setVisibility(View.INVISIBLE);
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -115,8 +116,6 @@ public class PlantDetailFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
-                    detail.setVisibility(View.INVISIBLE);
                     Log.d("detail fragment", String.valueOf(id));
                     String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/" + id + "/";
                     URL url = new URL(page);
@@ -150,6 +149,7 @@ public class PlantDetailFragment extends Fragment {
                             connection.connect();
                             InputStream input = connection.getInputStream();
                             image = BitmapFactory.decodeStream(input);
+                            image = image.createScaledBitmap(image,200,200,true);
                             Log.d("detail fragment", String.valueOf(object));
                         }
                         // 연결 끊기
@@ -164,8 +164,8 @@ public class PlantDetailFragment extends Fragment {
                                 tv_flowerlan.setText(object.get("flower_language").toString());
                                 tv_content_detail.setText(object.get("content").toString());
                                 tv_rasing_detail.setText(object.get("growth").toString());
+                                plant_detail.setVisibility(View.VISIBLE);
                                 progressBar.setVisibility(View.INVISIBLE);
-                                detail.setVisibility(View.VISIBLE);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
