@@ -21,19 +21,17 @@
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
         >
+
         <activity
             android:name=".DiaryFragment"
             android:exported="false" />
-
         <activity
             android:name=".PlantDetailFragment"
             android:exported="false" />
 
-
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/actions" />
-
         <meta-data
             android:name="com.robotemi.sdk.metadata.SKILL"
             android:value="@string/app_name" />

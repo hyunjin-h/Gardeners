@@ -57,12 +57,9 @@ public class SearchFragment extends Fragment {
 
     public SearchFragment() {
         manager = PlantDataManager.getInstance();
-        initDataset();
-
-//        if (manager.getMap("").size() == 0) {
-//
-//            initDataset();
-//        }
+        if (manager.getMap("").size() == 0) {
+            initDataset();
+        }
     }
 
     /**
@@ -90,7 +87,9 @@ public class SearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar3);
-
+        if (manager.getMap("").size() != 0) {
+            progressBar.setVisibility(View.INVISIBLE);
+        }
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -113,9 +112,12 @@ public class SearchFragment extends Fragment {
                         @Override
                         public synchronized void run() {
                             try {
-                                plantAdapter.setFilteredList(manager.getMap(""));
-                                progressBar.setVisibility(View.INVISIBLE);
-
+                                if(manager.getMap("").size() != 0) {
+                                    plantAdapter.setFilteredList(manager.getMap(""));
+                                } else {
+                                    progressBar.setVisibility(View.VISIBLE);
+                                    initDataset();
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -125,7 +127,6 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -167,7 +168,6 @@ public class SearchFragment extends Fragment {
                             // 버퍼리더 종료
                             br.close();
                             JSONObject temp = new JSONObject(sb.toString());
-//                            Log.d("temp object", String.valueOf(temp.getJSONArray("results")));
                             array = temp.getJSONArray("results");
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject object = array.getJSONObject(i);
@@ -238,9 +238,8 @@ public class SearchFragment extends Fragment {
                             // 버퍼리더 종료
                             br.close();
                             JSONObject temp = new JSONObject(sb.toString());
-//                            Log.d("temp object", String.valueOf(temp.getJSONArray("results")));
                             array = temp.getJSONArray("results");
-                            for (int i = 0; i < array.length(); i++) {
+                            for (int i = 0; i < 3; i++) {
                                 JSONObject object = array.getJSONObject(i);
                                 URL urlConnection = new URL(object.get("main_image").toString());
                                 HttpURLConnection connection = (HttpURLConnection) urlConnection.openConnection();
@@ -248,12 +247,10 @@ public class SearchFragment extends Fragment {
                                 connection.connect();
                                 InputStream input = connection.getInputStream();
                                 Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                                myBitmap = myBitmap.createScaledBitmap(myBitmap,200,200,true);
+                                myBitmap = myBitmap.createScaledBitmap(myBitmap, 200, 200, true);
                                 arrayList.add(new PlantData(Integer.parseInt(object.get("id").toString()), myBitmap, object.get("name").toString(), object.get("content").toString()));
                             }
                             manager.addMap("", arrayList);
-
-
                     }
                         // 연결 끊기
                         conn.disconnect();
@@ -265,7 +262,6 @@ public class SearchFragment extends Fragment {
                             try {
                                 plantAdapter.setFilteredList(manager.getMap(""));
                                 progressBar.setVisibility(View.INVISIBLE);
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
