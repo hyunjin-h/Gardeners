@@ -1,28 +1,43 @@
 package com.example.gardeners;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -30,13 +45,27 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private TextView temperatureText, humidityText, co2Text;
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int CAPTURE_IMAGE_REQUEST = 1;
+    private String mCurrentPhotoPath;
+    private File photoFile;
+    private ImageView imageView;
+    private CameraSurfaceView surfaceView;
+    Camera cam = null;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private AppCompatActivity activity;
 
-    public HomeFragment() {
-        // Required empty public constructor
+    public HomeFragment(AppCompatActivity activity) {
+        this.activity = activity;
+    }
+
+    public void captureCamera() {
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        activity.startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     public void getCoreData() {
@@ -95,24 +124,6 @@ public class HomeFragment extends Fragment {
         thread.start();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +141,31 @@ public class HomeFragment extends Fragment {
         temperatureText = view.findViewById(R.id.temperatures_tv);
         humidityText = view.findViewById(R.id.humidity_tv);
         co2Text = view.findViewById(R.id.co2_tv);
+        imageView = view.findViewById(R.id.rect_iv);
+        surfaceView = view.findViewById(R.id.surfaceView);
+        temperatureText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                capture();
+            }
+        });
         getCoreData();
         return view;
+    }
+
+    private void capture() {
+        Log.d("image", "click1");
+        surfaceView.capture(new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data, Camera camera) {
+                Log.d("image", "click2");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                imageView.setImageBitmap(bitmap);
+                // 사진을 찍게 되면 미리보기가 중지된다. 다시 미리보기를 시작하려면...
+                camera.startPreview();
+            }
+        });
     }
 }
