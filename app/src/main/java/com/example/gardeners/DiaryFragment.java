@@ -112,7 +112,7 @@ public class DiaryFragment extends Fragment {
             public void run() {
 
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/gardens/" + id + "/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -178,7 +178,7 @@ public class DiaryFragment extends Fragment {
             public void run() {
                 try {
 
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/" + id + "/diary/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/gardens/" + id + "/diary/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 

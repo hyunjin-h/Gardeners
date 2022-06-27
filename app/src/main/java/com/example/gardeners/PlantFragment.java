@@ -78,7 +78,7 @@ public class PlantFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/gardens/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 

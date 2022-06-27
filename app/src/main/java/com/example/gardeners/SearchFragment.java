@@ -145,7 +145,7 @@ public class SearchFragment extends Fragment {
             public synchronized void run() {
                 try {
 
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/?word=" + word;
+                    String page = "http://cashup.iptime.org:5050/api/v1/flowers/?word=" + word;
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -215,7 +215,7 @@ public class SearchFragment extends Fragment {
             @Override
             public synchronized void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/flowers/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/flowers/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 

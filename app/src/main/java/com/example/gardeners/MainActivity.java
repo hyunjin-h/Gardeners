@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public synchronized void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/command";
+                    String page = "http://cashup.iptime.org:5050/api/v1/core/1/command";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public synchronized void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/command/" + command.getCommandId() + "/done/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/core/command/" + command.getCommandId() + "/done/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements
             public synchronized void run() {
                 try {
                     Thread.sleep(10000);
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/gardens/1/water/" + command.getLocation() + "/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/gardens/1/water/2/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public synchronized void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/command/" + command.getCommandId() + "/ready/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/core/command/" + command.getCommandId() + "/ready/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
