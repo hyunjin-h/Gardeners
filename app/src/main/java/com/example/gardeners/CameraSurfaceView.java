@@ -36,14 +36,14 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     // 서피스뷰가 메모리에 만들어지는 시점에 호출됨
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        mCamera = Camera.open(); // 카메라 객체를 참조하여 변수에 할당
-        mCamera.setDisplayOrientation(90); // 이게 없으면 미리보기 화면이 회전되어 나온다.
-        Log.d("camera", String.valueOf(mCamera));
-        try {
-            mCamera.setPreviewDisplay(mHolder); // Camera 객체에 이 서피스뷰를 미리보기로 하도록 설정
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        mCamera = Camera.open(); // 카메라 객체를 참조하여 변수에 할당
+//        mCamera.setDisplayOrientation(90); // 이게 없으면 미리보기 화면이 회전되어 나온다.
+//        Log.d("camera", String.valueOf(mCamera));
+//        try {
+//            mCamera.setPreviewDisplay(mHolder); // Camera 객체에 이 서피스뷰를 미리보기로 하도록 설정
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /* 서피스뷰가 크기와 같은 것이 변경되는 시점에 호출

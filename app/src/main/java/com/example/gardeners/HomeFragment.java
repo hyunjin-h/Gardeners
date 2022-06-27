@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
         humidityText = view.findViewById(R.id.humidity_tv);
         co2Text = view.findViewById(R.id.co2_tv);
         imageView = view.findViewById(R.id.rect_iv);
-        surfaceView = view.findViewById(R.id.surfaceView);
+//        surfaceView = view.findViewById(R.id.surfaceView);
         refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override

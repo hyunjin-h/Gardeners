@@ -53,6 +53,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements
         homeFragment = new HomeFragment(this);
         plantFragment = new PlantFragment();
         searchFragment = new SearchFragment();
-        surfaceView = findViewById(R.id.surfaceView);
+//        surfaceView = findViewById(R.id.surfaceView);
 
         new Timer().scheduleAtFixedRate(new TimerTask(){
             @Override
@@ -184,12 +185,18 @@ public class MainActivity extends AppCompatActivity implements
             for(int i = 0; i < arrayList.size(); i++) {
                 CommandData command = arrayList.get(i);
                 doingCommand = command;
+                Log.d("command", doingCommand.getCommand());
                 switch (command.getCommand()) {
                     case "move":
                     case "water":
                     case "home":
                         isWork = true;
                         robot.goTo(command.getLocation());
+                        break;
+                    case "call":
+                        isWork = true;
+                        finishCommand(doingCommand);
+                        robot.startTelepresence(Objects.requireNonNull(robot.getAdminInfo()).getName(), robot.getAdminInfo().getUserId());
                         break;
                     default:
                         break;
@@ -269,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements
                             br.close();
                         }
                         JSONObject object = new JSONObject(sb.toString());
+                        Log.d("water command", object.get("is_water").toString());
                         if (Integer.parseInt(object.get("is_water").toString()) == 0) {
                             isWatering = false;
                             finishCommand(command);
