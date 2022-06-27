@@ -142,10 +142,10 @@
         android:layout_gravity="center"
         android:visibility="visible"/>
 
-    <com.example.gardeners.CameraSurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:visibility="visible"
-        />
+<!--    <com.example.gardeners.CameraSurfaceView-->
+<!--        android:id="@+id/surfaceView"-->
+<!--        android:layout_width="1dp"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:visibility="visible"-->
+<!--        />-->
 </FrameLayout>

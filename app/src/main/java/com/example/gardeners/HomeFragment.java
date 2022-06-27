@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 try {
-                    String page = "http://www.smart-gardening.kro.kr:8000/api/v1/core/1/";
+                    String page = "http://cashup.iptime.org:5050/api/v1/core/1/";
                     URL url = new URL(page);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment {
                             try {
                                 temperatureText.setText(json.get("temperature").toString());
                                 humidityText.setText(json.get("humidity").toString() + "%");
-                                co2Text.setText(json.get("co2").toString() + "nit");
+                                co2Text.setText(json.get("illuminance").toString() + "nit");
                                 progressBar.setVisibility(View.INVISIBLE);
                                 homeData.setVisibility(View.VISIBLE);
                             } catch (JSONException e) {
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
         humidityText = view.findViewById(R.id.humidity_tv);
         co2Text = view.findViewById(R.id.co2_tv);
         imageView = view.findViewById(R.id.rect_iv);
-        surfaceView = view.findViewById(R.id.surfaceView);
+//        surfaceView = view.findViewById(R.id.surfaceView);
         refreshButton = view.findViewById(R.id.refresh_button);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
